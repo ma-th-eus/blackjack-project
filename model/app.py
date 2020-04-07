@@ -13,10 +13,11 @@ def show_options():
     print('3 - Finish the game')
 
 def show_score():
-    print(f'Player {player_score}x{dealer_score} Dealer')
+    print(f'        ROUND SCORE       ')
+    print(f'*** Player {player_score}x{dealer_score} Dealer ***')
 
 def show_game_score():
-    print(f'Player {player_score}x{dealer_game_score} Dealer')
+    print(f'Player {player_game_score}x{dealer_game_score} Dealer')
 
 def getPoints(hand):
     sum = 0
@@ -44,7 +45,7 @@ dealer_hand = []
 option = 1
 round = 0
 round_finished = False
-while getPoints(player_hand) < 21 and getPoints(dealer_hand) < 21 and round_finished == False:
+while round_finished == False and round < 5:
     round = round + 1
     print(f'\n\n*********** R O U N D   {round}  **************\n')
 
@@ -54,12 +55,13 @@ while getPoints(player_hand) < 21 and getPoints(dealer_hand) < 21 and round_fini
         player_score = getPoints(player_hand)
         print(f'player_score: {player_score}\n\n')
         show_options()
-        option = input('\nOption: ')
+        option = int(input('\nOption: '))
 
         if player_score > 21:
             round_finished = True
+            option = 4
 
-    while option == 2 and round_finished == False:
+    while option == 2 and dealer_score < player_score and round_finished == False:
         dealer_hand.append(obtain_random_card())
         show_hands(dealer_hand)
         dealer_score = getPoints(dealer_hand)
@@ -73,6 +75,27 @@ while getPoints(player_hand) < 21 and getPoints(dealer_hand) < 21 and round_fini
         round_finished = True
         print('FIM DE JOGO')
         print(show_game_score())
+
+    if option == 4:
+        if player_score > 21:
+            print('Dealer wins!')
+        elif dealer_score > player_score:
+            print('Dealer wins!')
+        else:
+            print('Player wins!')
+
+    # if getPoints(player_hand) > 21 or getPoints(dealer_hand) > 21:
+    #     round_finished = True
+    #     if dealer_score > player_score:
+    #         print('Dealer wins!')
+    #     else:
+    #         print('Player wins!')
+    show_score()
+
+
+    # print('GET POINTS: ', getPoints(player_hand),'    d ', getPoints(dealer_hand))
+    # print('GET POINTS score: ', player_score,'    d ', dealer_score)
+
 
 
 
